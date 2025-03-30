@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const path = require('path');
+require('dotenv').config();
 
 const encoder = bodyParser.urlencoded({ extended: true });
 const app = express();
@@ -19,11 +20,11 @@ app.use(session({
 }));
 
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'J.Aravind984867',
-    database: 'eduplay'
-});
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.PASSWORD,
+    database: process.env.DB_NAME || 'eduplay',
+  });
 
 connection.connect(function(error) {
     if (error) {
